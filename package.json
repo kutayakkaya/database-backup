@@ -1,0 +1,20 @@
+{
+    "name": "database-backup",
+    "version": "1.0.0",
+    "description": "Automatic MySQL database backup system using Node.js.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "keywords": [
+        "mysql",
+        "backup",
+        "database",
+        "node.js"
+    ],
+    "author": "Kutay Akkaya",
+    "license": "MIT",
+    "dependencies": {
+        "dotenv": "^10.0.0"
+    }
+}
