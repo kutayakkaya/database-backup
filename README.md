@@ -1,41 +1,95 @@
-# Database Backup
+# Database Backup System
 
-This is a Node.js application that performs automatic backups of a MySQL database using the `mysqldump` command. The backups are saved as SQL files in a "backups" folder.
+A robust, automated database backup system built with Node.js and TypeScript. Currently supports MySQL with extensible architecture for other databases.
 
 ## Features
 
-- Automatic backup of a MySQL database at regular intervals (default: every hour)
-- Backup files are saved as SQL files in a designated "backups" folder
-- The "backups" folder is automatically created if it does not exist
-- The backup process logs information and error messages to the console
+- **Automated Backups** - Scheduled backups at configurable intervals
+- **MySQL Support** - Full MySQL database backup functionality
+- **TypeScript** - Fully typed for better development experience
+- **Extensible Architecture** - Easy to add new database drivers
+- **File Management** - Organized backup files with timestamps
+
+## Installation
+
+1. **Clone the repository**
+```bash
+git clone <https://github.com/kutayakkaya/database-backup.git>
+cd database-backup
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Build the project**
+```bash
+npm run build
+```
 
 ## Prerequisites
 
-Before running the application, make sure you have the following:
+- **Node.js**
+- **TypeScript** (included in devDependencies)
+- **MySQL** with `mysqldump` utility
 
-- Node.js installed on your machine
-- A MySQL database with connection credentials
-- MySQL command-line tools installed (to use the `mysqldump` command)
+## Usage
 
-## Getting Started
+You can check the example in `src/index.ts` to see how to configure and start the backup process. Simply edit the database configuration, backup folder, and interval as needed.
 
-1. Clone this repository to your local machine or download the source code.
-2. Install the dependencies by running the following command in the project directory:
-`npm install`
-3. Create a `.env` file in the project directory and set the following environment variables:
-`DB_HOST=<MySQL host>
-DB_USER=<MySQL username>
-DB_PASSWORD=<MySQL password>
-DB_DATABASE=<MySQL database name>`
-4. Replace `<MySQL host>`, `<MySQL username>`, `<MySQL password>`, and `<MySQL database name>` with your own database connection details
-5. Run the application using the following command:
-`node index.js` or `npm start`
-6. The backup process will start, and you will see log messages indicating the progress and status of each backup operation.
+```typescript
+const config: DatabaseConfig = {
+    hostname: "localhost",
+    user: "your_username",
+    database: "your_database",
+    password: "your_password"
+};
+const dbType: DatabaseType = "mysql";
+const backupFolder = "backups";
+const intervalMs = 60 * 1000;
+```
 
-## Customization
+## Running
 
-- If you want to change the backup interval, modify the interval value in the `setInterval` function call in `startBackup` method of the `DatabaseBackup` class (specified in milliseconds).
-- To specify a different backup folder path, modify the `backupFolder` property in the `DatabaseBackup` class constructor.
+### Development Mode
+```bash
+npm run dev
+```
+
+### Production Mode
+```bash
+npm run build
+npm run start
+```
+
+## Architecture
+
+### Core Components
+
+1. **IDatabaseBackup** - Abstract base class providing:
+   - Configuration validation
+   - Interval management (start/stop)
+   - Timestamp generation
+   - File path management
+   - Common error handling
+
+2. **DatabaseBackupFactory** - Factory pattern for creating backup instances
+3. **MySQLBackup** - MySQL-specific implementation using `mysqldump`
+
+### Adding New Database Support
+
+The system is designed to be extensible. To add a new database:
+
+1. Create new driver in `src/drivers/` extending `IDatabaseBackup`
+2. Add database type to `DatabaseType` in `src/core/types.ts`
+3. Update factory in `DatabaseBackupFactory.ts`
+
+Example for PostgreSQL:
+```typescript
+case "postgres":
+    return new PostgreSQLBackup(config, backupFolder, intervalMs);
+```
 
 ## License
 

@@ -1,20 +1,25 @@
 {
     "name": "database-backup",
-    "version": "1.0.0",
-    "description": "Automatic MySQL database backup system using Node.js.",
-    "main": "index.js",
+    "version": "1.0.1",
+    "description": "Automatic database backup system using Node.js and TypeScript.",
+    "type": "commonjs",
     "scripts": {
-        "start": "node index.js"
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "dev": "ts-node src/index.ts"
     },
     "keywords": [
         "mysql",
         "backup",
         "database",
-        "node.js"
+        "node.js",
+        "typescript"
     ],
     "author": "Kutay Akkaya",
-    "license": "MIT",
-    "dependencies": {
-        "dotenv": "^10.0.0"
-    }
+    "devDependencies": {
+        "@types/node": "^24.7.2",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    },
+    "license": "MIT"
 }
