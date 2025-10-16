@@ -1,14 +1,16 @@
 import { DatabaseType, DatabaseConfig } from "./types";
 import { IDatabaseBackup } from "./IDatabaseBackup";
 import { MySQLBackup } from "../drivers/MySQLBackup";
+import { Logger } from "../utils/Logger";
 
-export abstract class DatabaseBackupFactory {
+export class DatabaseBackupFactory {
     static create(type: DatabaseType, config: DatabaseConfig, backupFolder: string, intervalMs: number): IDatabaseBackup {
         switch (type) {
             case "mysql":
                 return new MySQLBackup(config, backupFolder, intervalMs);
             default:
-                throw new Error(`Unsupported database type: ${type}`);
+                Logger.error(`Unsupported database type: ${type}`, true);
+                return {} as IDatabaseBackup;
         }
     }
 }

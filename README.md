@@ -9,12 +9,13 @@ A robust, automated database backup system built with Node.js and TypeScript. Cu
 - **TypeScript** - Fully typed for better development experience
 - **Extensible Architecture** - Easy to add new database drivers
 - **File Management** - Organized backup files with timestamps
+- **Logging** - Colored console output and file logging
 
 ## Installation
 
 1. **Clone the repository**
 ```bash
-git clone <https://github.com/kutayakkaya/database-backup.git>
+git clone https://github.com/kutayakkaya/database-backup.git
 cd database-backup
 ```
 
@@ -40,14 +41,14 @@ You can check the example in `src/index.ts` to see how to configure and start th
 
 ```typescript
 const config: DatabaseConfig = {
-    hostname: "localhost",
+    hostname: "your_hostname",
     user: "your_username",
     database: "your_database",
     password: "your_password"
 };
 const dbType: DatabaseType = "mysql";
-const backupFolder = "backups";
-const intervalMs = 60 * 1000;
+const backupFolder = "your_backup_folder";
+const intervalMs = 1000 * 60 * 60;
 ```
 
 ## Running

@@ -1,6 +1,7 @@
-import { IDatabaseBackup } from "../core/IDatabaseBackup";
 import { exec } from "child_process";
 import { promisify } from "util";
+import { IDatabaseBackup } from "../core/IDatabaseBackup";
+import { Logger } from "../utils/Logger";
 
 const execAsync = promisify(exec);
 
@@ -12,13 +13,15 @@ export class MySQLBackup extends IDatabaseBackup {
 
         try {
             await execAsync(cmd);
-            console.log(`MySQL backup created at: ${outputPath}`);
+            Logger.info(`MySQL backup created at: ${outputPath}`);
         } catch (err) {
             if (err instanceof Error) {
                 let errorMessage = err.message;
 
                 errorMessage = errorMessage.replace(/-p"([^"]*)"/g, '-p"***"');
-                throw new Error(`MySQL backup failed: ${errorMessage}`);
+                Logger.error(`MySQL backup failed: ${errorMessage}`);
+            } else {
+                Logger.error(`Unknown MySQL backup error: ${err}`);
             }
         }
     }
